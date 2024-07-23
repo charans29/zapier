@@ -40,7 +40,6 @@ function main() {
                     }
                 }
             });
-            yield new Promise(r => setTimeout(r, 3000));
         }
     });
 }
