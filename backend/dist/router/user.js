@@ -24,6 +24,7 @@ const prismaClient = new client_1.PrismaClient();
 router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const parsedData = types_1.SignupSchema.safeParse(body);
+    console.log(body);
     if (!parsedData.success) {
         return res.status(411).json({
             message: "Incorrect inputs"
@@ -71,7 +72,6 @@ router.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function*
             message: "Sorry credentials are incorrect"
         });
     }
-    // sign the jwt
     const token = jsonwebtoken_1.default.sign({
         id: user.id
     }, config_1.JWT_PASSWORD);
