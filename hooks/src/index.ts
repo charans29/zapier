@@ -9,7 +9,7 @@ app.post("/hooks/catch/:userId/:zapId", async (req, res) => {
     const userId = req.params.userId;
     const zapId = req.params.zapId;
     const body = req.body;
-    
+
     await client.$transaction(async tx => {
         const run = await tx.zapRun.create({
             data: {
@@ -28,6 +28,6 @@ app.post("/hooks/catch/:userId/:zapId", async (req, res) => {
     })
 })
 
-app.listen(3000, () => {
-    console.log(`running on http://localhost:3000`);
+app.listen(3002, () => {
+    console.log(`running on http://localhost:3002`);
 });
