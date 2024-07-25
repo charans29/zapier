@@ -47,6 +47,6 @@ async function seed() {
     
 }
 
-// seed();
+seed();
 
 app.listen(3000);

@@ -12,32 +12,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const client_1 = require("@prisma/client");
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-const client = new client_1.PrismaClient();
-app.post("/hooks/catch/:userId/:zapId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const userId = req.params.userId;
-    const zapId = req.params.zapId;
-    const body = req.body;
-    yield client.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
-        const run = yield tx.zapRun.create({
-            data: {
-                zapId: zapId,
-                metadata: body
-            }
-        });
-        yield tx.zapRunOutbox.create({
-            data: {
-                zapRunId: run.id
-            }
-        });
-    }));
-    res.json({
-        message: "webhooks triggered"
-    });
-}));
-app.listen(3002, () => {
-    console.log(`running on http://localhost:3002`);
+exports.sendEmail = void 0;
+const nodemailer_1 = __importDefault(require("nodemailer"));
+// SOL_PRIVATE_KEY=""
+// SMTP_USERNAME=""
+// SMTP_PASSWORD=""
+// SMTP_ENDPOINT
+const transport = nodemailer_1.default.createTransport({
+    host: process.env.SMTP_ENDPOINT,
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.SMTP_USERNAME,
+        pass: process.env.SMTP_PASSWORD,
+    },
 });
+function sendEmail(to, body) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield transport.sendMail({
+            from: "zapier@work.com",
+            sender: "zapier@work.com",
+            to,
+            subject: "Hello from Zapier",
+            text: body
+        });
+    });
+}
+exports.sendEmail = sendEmail;
