@@ -33,7 +33,6 @@ cd <repository-path>
 
 ```
 
-Replace <repository-url> with the actual URL of your repository and <repository-path> with the name of your project directory.
 Install Dependencies
 
 ```bash
